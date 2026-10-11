@@ -34,6 +34,29 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ## 🔌 Schéma de Câblage & Affectation des Broches (ESP32 30 broches)
 
++-------------------+
+                         3V3  --- | 1             38  | --- GND
+                         EN   --- | 2             37  | --- GPIO 23 (MOSI / SPI)
+                   GPIO 36    --- | 3 (VP)        36  | --- GPIO 22 (SCL / I2C MPU6050)
+                   GPIO 39    --- | 4 (VN)        35  | --- GPIO 21 (SDA / I2C MPU6050)
+                   GPIO 34    --- | 5             34  | --- GPIO 33 (SD_CS & Clignotant Droit)*
+                   GPIO 35    --- | 6             33  | --- GPIO 19 (MISO / SPI)
+                   GPIO 32    --- | 7             32  | --- GPIO 18 (SCK / SPI)
+                   GPIO 33    --- | 8             31  | --- GND
+                   GPIO 25    --- | 9             30  | --- GPIO 5  (Libre / Autre CS)
+                   GPIO 26    --- | 10            29  | --- GPIO 17 (UART2 RX / GPS)
+                   GPIO 27    --- | 11            28  | --- GPIO 16 (UART2 TX / GPS)
+                   GPIO 14    --- | 12            27  | --- 4 (GND)
+                   GPIO 12    --- | 13            26  | --- 0 (GND)
+                        GND   --- | 14            25  | --- GPIO 13 (LED Data - WS2812B)
+                   GPIO 13    --- | 15            24  | --- GPIO 2  (Libre)
+                   GPIO 9     --- | 16            23  | --- GPIO 0  (Boot)
+                   GPIO 10    --- | 17            22  | --- GPIO 4  (Libre)
+                   GPIO 11    --- | 18            21  | --- 5V  (Alim Régulée DC-DC)
+                         5V   --- | 19            20  | --- GND
+                                  +-------------------+
+
+
 ### 🖥️ 1. Affichage TFT & Carte SD (Bus SPI Partagé)
 | Broche Périphérique | Rôle / Description | Broche ESP32 |
 | :--- | :--- | :--- |
