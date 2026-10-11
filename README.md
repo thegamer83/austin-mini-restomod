@@ -32,57 +32,53 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ---
 
-## 🔌 Schéma de Câblage & Affectation des Broches (ESP32 30 broches)
-### 🔌 0. Connecteur GX16 (10 Broches - Écran & LEDs)
+### 🔌 Connecteur GX16 (10 Broches - Écran & LEDs)
 | Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus |
 | :---: | :--- | :--- |
 | **Pin 1** | VCC / Alimentation Écran | **5V** ou **3.3V** (selon module) |
 | **Pin 2** | GND Masse Écran & LEDs | **GND** |
-| **Pin 3** | SPI MOSI (Données) | **GPIO 23** |
-| **Pin 4** | SPI MISO (Carte SD) | **GPIO 19** |
-| **Pin 5** | SPI SCK (Horloge) | **GPIO 18** |
-| **Pin 6** | TFT / SD Chip Select (SD_CS) | **GPIO 33** |
-| **Pin 7** | Rétroéclairage (Backlight - BL) | **GPIO 27** (via PWM) |
-| **Pin 8** | Données Bandeau LEDs WS2812B | **GPIO 13** (`PIN_LED_DATA`) |
+| **Pin 3** | SPI MOSI (Données) | **GPIO 23** (`D23`) |
+| **Pin 4** | SPI MISO (Carte SD) | **GPIO 19** (`D19`) |
+| **Pin 5** | SPI SCK (Horloge) | **GPIO 18** (`D18`) |
+| **Pin 6** | TFT / SD Chip Select (`SD_CS`) | **GPIO 33** (`D33`) |
+| **Pin 7** | Rétroéclairage (`PIN_BACKLIGHT`) | **GPIO 27** (`D27`) |
+| **Pin 8** | Données Bandeau LEDs (`PIN_LED_DATA`) | **GPIO 13** |
 | **Pin 9** | *Réservé / Extension* | - |
 | **Pin 10** | *Réservé / Extension* | - |
 
-### 🖥️ 1. Affichage TFT & Carte SD (Bus SPI Partagé)
+### 🖥️ Affichage TFT & Carte SD (Bus SPI Partagé)
 | Broche Périphérique | Rôle / Description | Broche ESP32 |
 | :--- | :--- | :--- |
 | **MOSI (SDA)** | Données SPI (Master Out - Partagé) | **GPIO 23** |
 | **MISO** | Données SPI (Master In - Partagé) | **GPIO 19** |
 | **SCK (SCL)** | Horloge SPI (Clock - Partagé) | **GPIO 18** |
 | **SD_CS** | Chip Select de la Carte SD | **GPIO 33** |
-| **BL (Backlight)** | Rétroéclairage écran | **GPIO 27** |
+| **BL (Backlight)** | Rétroéclairage écran (`PIN_BACKLIGHT`) | **GPIO 27** |
 
-### ⚙️ 2. Entrées Numériques, Commandes & Sécurité (TOR)
+### ⚙️ Entrées Numériques, Commandes & Sécurité (TOR)
 | Composant / Signal | Rôle / Description | Broche ESP32 |
 | :--- | :--- | :--- |
-| **Bouton Page** | Changement de page écran (`PIN_PAGE_BTN`) | **GPIO 12** (Pull-up interne) |
-| **Bouton Wi-Fi** | Bascule du point d'accès AP (`PIN_WIFI_BTN`) | **GPIO 25** (Pull-up interne) |
-| **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption `FALLING`) | **GPIO 14** |
-| **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL` - Actif LOW) | **GPIO 26** |
-| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`) | **GPIO 17** |
-| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) | **GPIO 33** |
-| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
-| **Pleins Phares** | Signal d'activation des feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
+| **Bouton Page** | Changement de page écran (`PIN_PAGE_BTN`) | **GPIO 12** |
+| **Bouton Wi-Fi** | Bascule du point d'accès AP (`PIN_WIFI_BTN`) | **GPIO 25** |
+| **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption) | **GPIO 14** |
+| **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL`) | **GPIO 26** |
+| **Clignotant gauche** | Entrée clignotant gauche (`PIN_IND_L`) | **GPIO 17** |
+| **Clignotant droit** | Entrée clignotant droit (`PIN_IND_R`) | **GPIO 33** |
+| **Phares / Feux** | Feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
+| **Pleins Phares** | Feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
 
-### 📊 3. Entrées Analogiques (ADC)
+### 📊 Entrées Analogiques (ADC)
 | Capteur | Rôle / Description | Broche ESP32 |
 | :--- | :--- | :--- |
 | **Sonde Température** | Température d'eau moteur (`PIN_TEMP`) | **GPIO 34** |
 | **Jauge Essence** | Niveau de carburant (`PIN_FUEL`) | **GPIO 36** (VP) |
 
-### 🛠️ 4. Périphériques & Bus de Communication
+### 🛠️ Périphériques & Bus de Communication
 | Périphérique | Rôle / Description | Broches ESP32 |
 | :--- | :--- | :--- |
-| **Bus I2C** | Centrale inertielle MPU-6050 (Accéléro / Gyro) | **GPIO 21** (SDA) / **GPIO 22** (SCL) |
-| **Bus UART2** | Module GPS (Réception données `TinyGPS++`) | **GPIO 16** (RX) / TX non connecté (`-1`) |
-| **Bandeau LED** | Données du bandeau WS2812B (24 LEDs) | **GPIO 13** (`PIN_LED_DATA`) |
-
----
-
+| **Bus I2C** | Centrale inertielle MPU-6050 (`PIN_SDA` / `PIN_SCL`) | **GPIO 21** (SDA) / **GPIO 22** (SCL) |
+| **Bus UART2** | Module GPS (`PIN_GPS_RX` / `PIN_GPS_TX`) | **GPIO 16** (RX) / TX non connecté (`-1`) |
+| **Bandeau LED** | Données du bandeau WS2812B (`PIN_LED_DATA`) | **GPIO 13** |
 ## 🌐 Connexion Wi-Fi, Configuration & Récupération des Logs
 
 Pour interagir avec le tableau de bord :
@@ -105,17 +101,17 @@ Pour interagir avec le tableau de bord :
                          +---------------+
                   3V3 ---| 1          15 |---> VN
                   GND ---| 2          16 |---> GND
-              D15 (GPIO)---| 3          17 |---> D13 (SPI SCK / SD)
-               D2 (GPIO)---| 4          18 |---> D12 (Bouton Page)
-               D4 (GPIO)---| 5          19 |---> D14 (Signal RPM)
-             RX2 (GPIO16)--| 6          20 |---> D27 (Rétroéclairage BL)
-             TX2 (GPIO17)--| 7          21 |---> D26 (Alerte Pression Huile)
-               D5 (GPIO)---| 8          22 |---> D25 (Bouton Wi-Fi AP)
-             D18 (SPI SCK)-| 9          23 |---> D33 (SD_CS & Clignotant Droit)
-            D19 (SPI MISO)-| 10         24 |---> D32 (Phares / Pleins Phares)
-            D21 (I2C SDA)--| 11         25 |---> D35 (Feux de croisement)
-             RX0 (U0RX)--| 12         26 |---> D34 (Sonde Température Eau)
-             TX0 (U0TX)--| 13         27 |---> VN / VP (Jauge Essence GPIO36)
-            D22 (I2C SCL)--| 14         28 |---> EN
-            D23 (SPI MOSI)-| 15         29 |---> 3V3 / 5V (Alim DC-DC)
+            D15 (GPIO)---| 3          17 |---> D13 (SPI SCK / SD)
+             D2 (GPIO)---| 4          18 |---> D12 (Bouton Page - PIN_PAGE_BTN: 12)
+             D4 (GPIO)---| 5          19 |---> D14 (Signal RPM - PIN_RPM: 14)
+           RX2 (GPIO16)--| 6          20 |---> D27 (Rétroéclairage - PIN_BACKLIGHT: 27)
+           TX2 (GPIO17)--| 7          21 |---> D26 (Huile - PIN_OIL: 26)
+             D5 (GPIO)---| 8          22 |---> D25 (Bouton Wi-Fi - PIN_WIFI_BTN: 25)
+           D18 (SPI SCK)-| 9          23 |---> D33 (SD_CS & Clignotant Droit: 33)
+          D19 (SPI MISO)-| 10         24 |---> D32 (Pleins Phares - PIN_HIGH_BEAM: 32)
+          D21 (I2C SDA)--| 11         25 |---> D35 (Feux - PIN_LIGHTS: 35)
+             RX0 (U0RX)--| 12         26 |---> D34 (Température - PIN_TEMP: 34)
+             TX0 (U0TX)--| 13         27 |---> VN / VP (Jauge Essence - PIN_FUEL: 36)
+          D22 (I2C SCL)--| 14         28 |---> EN
+          D23 (SPI MOSI)-| 15         29 |---> 3V3 / 5V (Alim DC-DC)
                          +---------------+
