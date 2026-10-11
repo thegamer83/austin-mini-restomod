@@ -63,7 +63,7 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 | **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption) | **GPIO 14** |
 | **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL`) | **GPIO 26** |
 | **Clignotant gauche** | Entrée clignotant gauche (`PIN_IND_L`) | **GPIO 17** |
-| **Clignotant droit** | Entrée clignotant droit (`PIN_IND_R`) | **GPIO 33** |
+| **Clignotant droit** | Entrée clignotant droit (`PIN_IND_R`) | **GPIO 2** |
 | **Phares / Feux** | Feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
 | **Pleins Phares** | Feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
 
