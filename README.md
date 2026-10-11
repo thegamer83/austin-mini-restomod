@@ -40,7 +40,7 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 | **MOSI (SDA)** | Données SPI (Master Out - Partagé) | **GPIO 23** |
 | **MISO** | Données SPI (Master In - Partagé) | **GPIO 19** |
 | **SCK (SCL)** | Horloge SPI (Clock - Partagé) | **GPIO 18** |
-| **SD_CS** | Chip Select de la Carte SD | **GPIO 33** (anciennement tactile) |
+| **SD_CS** | Chip Select de la Carte SD | **GPIO 33** |
 | **BL (Backlight)** | Rétroéclairage écran | **GPIO 27** |
 
 ### ⚙️ 2. Entrées Numériques, Commandes & Sécurité (TOR)
