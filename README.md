@@ -34,7 +34,9 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ## 🔌 Schéma de Câblage & Affectation des Broches (ESP32 30 broches)
 
-+-------------------+
+### 🗺️ Représentation Broches ESP32 (30 Broches)
+```text
+                                  +-------------------+
                          3V3  --- | 1             38  | --- GND
                          EN   --- | 2             37  | --- GPIO 23 (MOSI / SPI)
                    GPIO 36    --- | 3 (VP)        36  | --- GPIO 22 (SCL / I2C MPU6050)
@@ -45,67 +47,12 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
                    GPIO 33    --- | 8             31  | --- GND
                    GPIO 25    --- | 9             30  | --- GPIO 5  (Libre / Autre CS)
                    GPIO 26    --- | 10            29  | --- GPIO 17 (UART2 RX / GPS)
-                   GPIO 27    --- | 11            28  | --- GPIO 16 (UART2 TX / GPS)
-                   GPIO 14    --- | 12            27  | --- 4 (GND)
-                   GPIO 12    --- | 13            26  | --- 0 (GND)
-                        GND   --- | 14            25  | --- GPIO 13 (LED Data - WS2812B)
-                   GPIO 13    --- | 15            24  | --- GPIO 2  (Libre)
-                   GPIO 9     --- | 16            23  | --- GPIO 0  (Boot)
-                   GPIO 10    --- | 17            22  | --- GPIO 4  (Libre)
-                   GPIO 11    --- | 18            21  | --- 5V  (Alim Régulée DC-DC)
-                         5V   --- | 19            20  | --- GND
+                   GPIO 14    --- | 11            28  | --- GPIO 16 (UART2 TX / GPS)
+                   GPIO 12    --- | 12            27  | --- 4 (GND)
+                        GND   --- | 13            26  | --- 0 (GND)
+                   GPIO 13    --- | 14            25  | --- GPIO 13 (LED Data - WS2812B)
+                   GPIO 9     --- | 15            24  | --- GPIO 2  (Libre)
+                   GPIO 10    --- | 16            23  | --- GPIO 0  (Boot)
+                   GPIO 11    --- | 17            22  | --- GPIO 4  (Libre)
+                         5V   --- | 18            21  | --- 5V  (Alim Régulée DC-DC)
                                   +-------------------+
-
-
-### 🖥️ 1. Affichage TFT & Carte SD (Bus SPI Partagé)
-| Broche Périphérique | Rôle / Description | Broche ESP32 |
-| :--- | :--- | :--- |
-| **MOSI (SDA)** | Données SPI (Master Out - Partagé) | **GPIO 23** |
-| **MISO** | Données SPI (Master In - Partagé) | **GPIO 19** |
-| **SCK (SCL)** | Horloge SPI (Clock - Partagé) | **GPIO 18** |
-| **SD_CS** | Chip Select de la Carte SD | **GPIO 33** (anciennement tactile) |
-| **BL (Backlight)** | Rétroéclairage écran | **GPIO 27** |
-
-### ⚙️ 2. Entrées Numériques, Commandes & Sécurité (TOR)
-| Composant / Signal | Rôle / Description | Broche ESP32 |
-| :--- | :--- | :--- |
-| **Bouton Page** | Changement de page écran (`PIN_PAGE_BTN`) | **GPIO 12** (Pull-up interne) |
-| **Bouton Wi-Fi** | Bascule du point d'accès AP (`PIN_WIFI_BTN`) | **GPIO 25** (Pull-up interne) |
-| **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption `FALLING`) | **GPIO 14** |
-| **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL` - Actif LOW) | **GPIO 26** |
-| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`) | **GPIO 17** |
-| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) | **GPIO 33** |
-| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
-| **Pleins Phares** | Signal d'activation des feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
-
-### 📊 3. Entrées Analogiques (ADC)
-| Capteur | Rôle / Description | Broche ESP32 |
-| :--- | :--- | :--- |
-| **Sonde Température** | Température d'eau moteur (`PIN_TEMP`) | **GPIO 34** |
-| **Jauge Essence** | Niveau de carburant (`PIN_FUEL`) | **GPIO 36** (VP) |
-
-### 🛠️ 4. Périphériques & Bus de Communication
-| Périphérique | Rôle / Description | Broches ESP32 |
-| :--- | :--- | :--- |
-| **Bus I2C** | Centrale inertielle MPU-6050 (Accéléro / Gyro) | **GPIO 21** (SDA) / **GPIO 22** (SCL) |
-| **Bus UART2** | Module GPS (Réception données `TinyGPS++`) | **GPIO 16** (RX) / TX non connecté (`-1`) |
-| **Bandeau LED** | Données du bandeau WS2812B (24 LEDs) | **GPIO 13** (`PIN_LED_DATA`) |
-
----
-
-## 🌐 Connexion Wi-Fi, Configuration & Récupération des Logs
-
-Pour interagir avec le tableau de bord :
-1. Appuyer sur le bouton Wi-Fi (`GPIO 25`) pour démarrer le point d'accès.
-2. Se connecter au réseau Wi-Fi : `Mini-Dashboard-AP` (Mot de passe : `minicooper`).
-3. Ouvrir un navigateur web à l'adresse : `http://192.168.4.1`
-4. Depuis la page web, vous pouvez configurer les paramètres généraux, le comportement des LEDs, ou cliquer sur le lien pour **télécharger vos logs de trajet au format `.csv`**.
-
----
-
-## 🛠️ Matériel Utilisé
-- Microcontrôleur ESP32 (30 broches)
-- Écran TFT SPI avec lecteur de carte SD intégré (contrôleur type ST7796S) ou module externe
-- Centrale inertielle MPU-6050
-- Module GPS UART
-- Bandeau LED WS2812B (24 LEDs)
