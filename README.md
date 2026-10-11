@@ -97,7 +97,8 @@ Pour interagir avec le tableau de bord :
 
 ## 🛠️ Matériel Utilisé
 - Microcontrôleur ESP32 (30 broches)
-- Écran TFT SPI avec lecteur de carte SD intégré (contrôleur type ST7796S)
+- Écran TFT SPI (contrôleur type ST7796S)
 - Centrale inertielle MPU-6050
+- lecteur de carte SD 
 - Module GPS UART
 - Bandeau LED WS2812B (24 LEDs)
