@@ -50,10 +50,10 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 | **Bouton Wi-Fi** | Bascule du point d'accès AP (`PIN_WIFI_BTN`) | **GPIO 25** (Pull-up interne) |
 | **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption `FALLING`) | **GPIO 14** |
 | **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL` - Actif LOW) | **GPIO 26** |
-| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`)  |  **GPIO 17** |
-| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) |  **GPIO 17** *(Note: réassigné)* / Clignotant physique |
-| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) |  **GPIO 35** |
-| **Pleins Phares** | Signal d'activation des feux de route  (`PIN_HIGH_BEAM`) | **GPIO 32**  |
+| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`) | **GPIO 17** |
+| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) | **GPIO 33** *(Note: réassigné)* / Clignotant physique |
+| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
+| **Pleins Phares** | Signal d'activation des feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
 
 ### 📊 3. Entrées Analogiques (ADC)
 | Capteur | Rôle / Description | Broche ESP32 |
@@ -82,7 +82,7 @@ Pour interagir avec le tableau de bord :
 
 ## 🛠️ Matériel Utilisé
 - Microcontrôleur ESP32 (30 broches)
-- Écran TFT SPI avec lecteur de carte SD intégré (contrôleur type ST7796S)
+- Écran TFT SPI avec lecteur de carte SD intégré (contrôleur type ST7796S) ou module externe
 - Centrale inertielle MPU-6050
 - Module GPS UART
 - Bandeau LED WS2812B (24 LEDs)
