@@ -101,23 +101,21 @@ Pour interagir avec le tableau de bord :
 - Bandeau LED WS2812B (24 LEDs)
 ### 🗺️ Représentation Broches ESP32 (30 Broches)
 ```text
-                                  +-------------------+
-                         3V3  --- | 1             38  | --- GND
-                         EN   --- | 2             37  | --- GPIO 23 (MOSI / SPI)
-                   GPIO 36    --- | 3 (VP)        36  | --- GPIO 22 (SCL / I2C MPU6050)
-                   GPIO 39    --- | 4 (VN)        35  | --- GPIO 21 (SDA / I2C MPU6050)
-                   GPIO 34    --- | 5             34  | --- GPIO 33 (SD_CS & Clignotant Droit)*
-                   GPIO 35    --- | 6             33  | --- GPIO 19 (MISO / SPI)
-                   GPIO 32    --- | 7             32  | --- GPIO 18 (SCK / SPI)
-                   GPIO 33    --- | 8             31  | --- GND
-                   GPIO 25    --- | 9             30  | --- GPIO 5  (Libre / Autre CS)
-                   GPIO 26    --- | 10            29  | --- GPIO 17 (UART2 RX / GPS)
-                   GPIO 14    --- | 11            28  | --- GPIO 16 (UART2 TX / GPS)
-                   GPIO 12    --- | 12            27  | --- 4 (GND)
-                        GND   --- | 13            26  | --- 0 (GND)
-                   GPIO 13    --- | 14            25  | --- GPIO 13 (LED Data - WS2812B)
-                   GPIO 9     --- | 15            24  | --- GPIO 2  (Libre)
-                   GPIO 10    --- | 16            23  | --- GPIO 0  (Boot)
-                   GPIO 11    --- | 17            22  | --- GPIO 4  (Libre)
-                         5V   --- | 18            21  | --- 5V  (Alim Régulée DC-DC)
-                                  +-------------------+
+                       [ USB / BOOT / EN ]
+                         +---------------+
+                  3V3 ---| 1          15 |---> VN
+                  GND ---| 2          16 |---> GND
+              D15 (GPIO)---| 3          17 |---> D13 (SPI SCK / SD)
+               D2 (GPIO)---| 4          18 |---> D12 (Bouton Page)
+               D4 (GPIO)---| 5          19 |---> D14 (Signal RPM)
+             RX2 (GPIO16)--| 6          20 |---> D27 (Rétroéclairage BL)
+             TX2 (GPIO17)--| 7          21 |---> D26 (Alerte Pression Huile)
+               D5 (GPIO)---| 8          22 |---> D25 (Bouton Wi-Fi AP)
+             D18 (SPI SCK)-| 9          23 |---> D33 (SD_CS & Clignotant Droit)
+            D19 (SPI MISO)-| 10         24 |---> D32 (Phares / Pleins Phares)
+            D21 (I2C SDA)--| 11         25 |---> D35 (Feux de croisement)
+             RX0 (U0RX)--| 12         26 |---> D34 (Sonde Température Eau)
+             TX0 (U0TX)--| 13         27 |---> VN / VP (Jauge Essence GPIO36)
+            D22 (I2C SCL)--| 14         28 |---> EN
+            D23 (SPI MOSI)-| 15         29 |---> 3V3 / 5V (Alim DC-DC)
+                         +---------------+
