@@ -34,7 +34,7 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ## 📌 Schéma de Câblage Global
 
-![Schéma de câblage final](image/Screenshot 2026-10-11 093627.png)
+![Schéma de câblage final](image/Screenshot_2026-10-11_093627.png)
 
 ---
 
