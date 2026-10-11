@@ -32,6 +32,12 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ---
 
+## 📌 Schéma de Câblage Global
+
+![Schéma de câblage final](image/Screenshot_20261010_135628_Chrome.jpg)
+
+---
+
 ### 🔌 Connecteur GX16 (10 Broches - Écran & LEDs)
 | Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus |
 | :---: | :--- | :--- |
