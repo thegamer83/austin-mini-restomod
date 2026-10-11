@@ -33,6 +33,19 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 ---
 
 ## 🔌 Schéma de Câblage & Affectation des Broches (ESP32 30 broches)
+### 🔌 0. Connecteur GX16 (10 Broches - Écran & LEDs)
+| Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus |
+| :---: | :--- | :--- |
+| **Pin 1** | VCC / Alimentation Écran | **5V** ou **3.3V** (selon module) |
+| **Pin 2** | GND Masse Écran & LEDs | **GND** |
+| **Pin 3** | SPI MOSI (Données) | **GPIO 23** |
+| **Pin 4** | SPI MISO (Carte SD) | **GPIO 19** |
+| **Pin 5** | SPI SCK (Horloge) | **GPIO 18** |
+| **Pin 6** | TFT / SD Chip Select (SD_CS) | **GPIO 33** |
+| **Pin 7** | Rétroéclairage (Backlight - BL) | **GPIO 27** (via PWM) |
+| **Pin 8** | Données Bandeau LEDs WS2812B | **GPIO 13** (`PIN_LED_DATA`) |
+| **Pin 9** | *Réservé / Extension* | - |
+| **Pin 10** | *Réservé / Extension* | - |
 
 ### 🖥️ 1. Affichage TFT & Carte SD (Bus SPI Partagé)
 | Broche Périphérique | Rôle / Description | Broche ESP32 |
@@ -50,10 +63,10 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 | **Bouton Wi-Fi** | Bascule du point d'accès AP (`PIN_WIFI_BTN`) | **GPIO 25** (Pull-up interne) |
 | **Signal RPM** | Compte-tours moteur (`PIN_RPM` - Interruption `FALLING`) | **GPIO 14** |
 | **Pression d'huile** | Alerte défaut pression d'huile (`PIN_OIL` - Actif LOW) | **GPIO 26** |
-| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`)  |  **GPIO 17** |
-| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) |  **GPIO 17** *(Note: réassigné)* / Clignotant physique |
-| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) |  **GPIO 35** |
-| **Pleins Phares** | Signal d'activation des feux de route  (`PIN_HIGH_BEAM`) | **GPIO 32**  |
+| **Clignotants gauche** | Entrées clignotants gauche (`PIN_IND_L`) | **GPIO 17** |
+| **Clignotants droite** | Entrées clignotants droit (`PIN_IND_R`) | **GPIO 33** |
+| **Phares / Feux** | Signal d'activation des feux de croisement (`PIN_LIGHTS`) | **GPIO 35** |
+| **Pleins Phares** | Signal d'activation des feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
 
 ### 📊 3. Entrées Analogiques (ADC)
 | Capteur | Rôle / Description | Broche ESP32 |
@@ -86,8 +99,6 @@ Pour interagir avec le tableau de bord :
 - Centrale inertielle MPU-6050
 - Module GPS UART
 - Bandeau LED WS2812B (24 LEDs)
->>>>>>> bfddf0c (Synchronisation projet Austin Mini)
-
 ### 🗺️ Représentation Broches ESP32 (30 Broches)
 ```text
                                   +-------------------+
