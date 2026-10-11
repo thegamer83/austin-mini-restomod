@@ -9,6 +9,9 @@
 #include <Preferences.h>
 #include <WiFi.h>
 #include <WebServer.h>
+#include <FS.h>
+#include <SD.h>
+
 
 // ==========================================
 // BROCHES CAPTEURS & PÉRIPHÉRIQUES
@@ -27,6 +30,9 @@
 #define PIN_IND_R     33  // Clignotant Droit
 #define PIN_LIGHTS    35  // Phares (Feux de croisement)
 #define PIN_HIGH_BEAM 32  // Pleins phares (Feux de route)
+
+// Le GPIO 33 est utilisé pour le CS de la carte SD
+#define SD_CS         33  
 
 #define PIN_SDA       21  
 #define PIN_SCL       22  
@@ -71,6 +77,12 @@ bool wifiApActif = false;
 const char* ssidAP = "Mini-Dashboard-AP";
 const char* passwordAP = "minicooper";
 
+// États des périphériques pour la page de réglages
+bool carteSdOk = false;
+bool mpuOk = false;
+bool gpsOk = false;
+unsigned long dernierOctetGpsRecu = 0;
+
 // Variables capteurs dynamiques
 volatile unsigned long derniereInterruptionRPM = 0;
 volatile unsigned int rpmBrut = 0;
@@ -81,16 +93,16 @@ float niveauEssence = 75.0f;
 double kilometrageTotal = 124850.0;
 double tripPartiel = 0.0;
 unsigned long dernierTempsOdo = 0;
+unsigned long dernierTempsLogSD = 0;
 
 int rapportEngage = 2; 
-int dernierRapportAffiche = -99; // Anti-scintillement Page 2
+int dernierRapportAffiche = -99; 
 float gLat = 0.0f;
 float gLong = 0.0f;
 float offsetX = 0.0f;
 float offsetY = 0.0f;
 float vitesseGpsKmph = 0.0f;
 
-// Mémoire pour effacer proprement le curseur G précédent sans clignotement global
 int ancienCursorGx = 380;
 int ancienCursorGy = 220;
 
@@ -103,6 +115,114 @@ void IRAM_ATTR ISR_CompteTours() {
   if (intervalle > 2000) {
     rpmBrut = 6000000 / intervalle;
     derniereInterruptionRPM = tempsActuel;
+  }
+}
+
+// ==========================================
+// GESTION CARTE SD & LOGS / BMP
+// ==========================================
+void initialiserCarteSD() {
+  if (!SD.begin(SD_CS)) {
+    Serial.println("Erreur : Carte SD introuvable ou échec d'initialisation !");
+    carteSdOk = false;
+  } else {
+    Serial.println("Carte SD initialisée avec succès.");
+    carteSdOk = true;
+  }
+}
+
+uint16_t lire16(File &f) {
+  uint16_t result;
+  f.read((uint8_t*)&result, sizeof(result));
+  return result;
+}
+
+uint32_t lire32(File &f) {
+  uint32_t result;
+  f.read((uint8_t*)&result, sizeof(result));
+  return result;
+}
+
+void afficherBmpSD(const char *filename, int x, int y) {
+  File bmpFile = SD.open(filename, FILE_READ);
+  if (!bmpFile) {
+    Serial.println("Fichier BMP introuvable sur la carte SD.");
+    return;
+  }
+
+  if (lire16(bmpFile) != 0x4D42) {
+    Serial.println("Format BMP invalide.");
+    bmpFile.close();
+    return;
+  }
+
+  lire32(bmpFile); // Taille du fichier
+  lire32(bmpFile); // Réservé
+  uint32_t offset = lire32(bmpFile); // Adresse de début des données image
+  lire32(bmpFile); // Taille de l'en-tête
+  int32_t largeur = lire32(bmpFile);
+  int32_t hauteur = lire32(bmpFile);
+
+  if (lire16(bmpFile) != 1) {
+    bmpFile.close();
+    return;
+  }
+
+  uint16_t profondeurBits = lire16(bmpFile);
+  if (profondeurBits != 24) {
+    Serial.println("Seuls les fichiers BMP 24-bits sont pris en charge.");
+    bmpFile.close();
+    return;
+  }
+
+  lire32(bmpFile); // Compression
+  lire32(bmpFile); // Taille image
+  lire32(bmpFile); // Résolution horizontale
+  lire32(bmpFile); // Résolution verticale
+  lire32(bmpFile); // Couleurs palettes
+  lire32(bmpFile); // Couleurs importantes
+
+  tft.startWrite();
+  bool flip = true;
+  if (hauteur < 0) {
+    hauteur = -hauteur;
+    flip = false;
+  }
+
+  uint32_t lignePad = (4 - ((largeur * 3) % 4)) % 4;
+  uint8_t sBuffer[3 * largeur];
+
+  for (int row = 0; row < hauteur; row++) {
+    int posY = y + (flip ? (hauteur - 1 - row) : row);
+    if (posY >= tft.height()) break;
+
+    bmpFile.seek(offset + (row * (largeur * 3 + lignePad)));
+    bmpFile.read(sBuffer, sizeof(sBuffer));
+
+    uint8_t *bptr = sBuffer;
+    for (int col = 0; col < largeur; col++) {
+      uint8_t b = *bptr++;
+      uint8_t g = *bptr++;
+      uint8_t r = *bptr++;
+      tft.drawPixel(x + col, posY, tft.color565(r, g, b));
+    }
+  }
+  tft.endWrite();
+  bmpFile.close();
+}
+
+void enregistrerLogSD() {
+  if (!carteSdOk) return;
+  unsigned long tempsActuel = millis();
+  if (tempsActuel - dernierTempsLogSD >= 1000) {
+    dernierTempsLogSD = tempsActuel;
+    
+    File fichierLog = SD.open("/trip_log.csv", FILE_APPEND);
+    if (fichierLog) {
+      fichierLog.printf("%lu,%.1f,%u,%.1f,%.1f,%d,%.1f\n", 
+                        millis(), vitesseGpsKmph, rpmBrut, tempEau, niveauEssence, etatAlerteHuile ? 1 : 0, kilometrageTotal);
+      fichierLog.close();
+    }
   }
 }
 
@@ -194,8 +314,18 @@ void mettreAJourOdometre() {
 }
 
 // ==========================================
-// SERVEUR WEB DE CONFIGURATION
+// SERVEUR WEB DE CONFIGURATION & LOGS SD
 // ==========================================
+void handleDownloadLog() {
+  if (SD.exists("/trip_log.csv")) {
+    File logFile = SD.open("/trip_log.csv", FILE_READ);
+    server.streamFile(logFile, "text/csv");
+    logFile.close();
+  } else {
+    server.send(404, "text/plain", "Fichier de log introuvable sur la carte SD.");
+  }
+}
+
 void handleRoot() {
   String html = "<html lang='fr'><head><meta charset='UTF-8'><title>Dashboard Austin Mini</title>";
   html += "<style>body{font-family:Arial;background:#222;color:#fff;text-align:center;padding:15px;}";
@@ -204,6 +334,16 @@ void handleRoot() {
   html += ".led-row{background:#2a2a2a;padding:6px;margin:4px 0;border-radius:4px;display:flex;justify-content:space-between;align-items:center;}</style></head>";
   html += "<body><h1>Austin Mini - Dashboard</h1>";
   
+  // Carte SD & Logs
+  html += "<div class='card'><h3>Gestion Carte SD & Logs</h3>";
+  if (carteSdOk) {
+    html += "<p style='color:#2ecc71;'>Carte SD connectée et prête.</p>";
+    html += "<a href='/download_log' style='background:#2980b9;color:#fff;padding:8px 15px;text-decoration:none;border-radius:4px;display:inline-block;'>Telecharger le fichier trip_log.csv</a>";
+  } else {
+    html += "<p style='color:#e74c3c;'>Carte SD non détectée !</p>";
+  }
+  html += "</div>";
+
   html += "<div class='card'><h3>Parametres Generaux, Odométre & Seuils RPM</h3>";
   html += "<form action='/save' method='GET'>";
   html += "<label>Kilometrage Total (km):</label><input type='text' name='odoTotal' value='" + String(kilometrageTotal, 1) + "'><br><br>";
@@ -280,6 +420,7 @@ void demarrerWiFiAP() {
   wifiApActif = true;
   server.on("/", handleRoot);
   server.on("/save", handleSave);
+  server.on("/download_log", handleDownloadLog);
   server.begin();
 }
 
@@ -331,17 +472,14 @@ void dessinerFondPage1() {
   tft.setCursor(cx - 28, cy + 30);
   tft.print("rpm x 1000");
 
-  // Zone double odomètre élargie et agrandie au centre bas de la page 1
   int odoLargeur = 130;
   int odoHauteur = 42;
   int odoX = cx - (odoLargeur / 2);
   int odoY = cy + 44;
   tft.fillRect(odoX, odoY, odoLargeur, odoHauteur, TFT_BLACK);
   tft.drawRect(odoX, odoY, odoLargeur, odoHauteur, TFT_DARKGREY);
-  // Ligne de séparation entre Total et Trip
   tft.drawFastHLine(odoX, odoY + 21, odoLargeur, TFT_DARKGREY);
 
-  // Étiquettes "TOT" et "TRP"
   tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
   tft.setTextSize(1);
   tft.setCursor(odoX + 4, odoY + 6);
@@ -379,7 +517,7 @@ void dessinerFondPage1() {
 
 void dessinerFondPage2() {
   tft.fillScreen(0x18E3); 
-  dernierRapportAffiche = -99; // Réinitialise l'anti-scintillement à l'arrivée sur la page 2
+  dernierRapportAffiche = -99;
   
   int xDepart = 20;
   int yBarre = 10;
@@ -421,19 +559,30 @@ void dessinerFondPage3() {
   tft.fillScreen(TFT_NAVY);
   tft.setTextColor(TFT_WHITE, TFT_NAVY);
   tft.setTextSize(3);
-  tft.setCursor(20, 20);
+  tft.setCursor(20, 15);
   tft.println("PAGE 3 : REGLAGES");
+  
   tft.setTextSize(2);
-  tft.setCursor(20, 75);
-  tft.print("RPM Max: ");
-  tft.print(seuilRpmMax);
-  tft.setCursor(20, 110);
+  tft.setCursor(20, 65);
   tft.print("WiFi AP: ");
-  tft.print(wifiApActif ? "ON (192.168.4.1)" : "OFF");
-  tft.setCursor(20, 150);
+  
+  tft.setCursor(20, 110);
   tft.printf("Odo: %.1f km", kilometrageTotal);
-  tft.setCursor(20, 190);
+  
+  tft.setCursor(20, 155);
   tft.printf("Trip: %.1f km", tripPartiel);
+  
+  // État Carte SD
+  tft.setCursor(20, 205);
+  tft.print("Carte SD : ");
+
+  // État MPU6050 (replacé proprement sur la page réglages)
+  tft.setCursor(20, 245);
+  tft.print("MPU6050 : ");
+
+  // État GPS
+  tft.setCursor(20, 285);
+  tft.print("GPS : ");
 }
 
 // ==========================================
@@ -461,19 +610,16 @@ void actualiserPage1() {
     tft.print(rapportEngage);
   }
 
-  // --- Affichage des odomètres agrandis (Total sans virgule, Trip avec décimale) ---
   int odoLargeur = 130;
   int odoX = cx - (odoLargeur / 2);
   int odoY = cy + 44;
 
-  // Actualisation Total (Sans décimale, taille augmentée à 2)
   tft.fillRect(odoX + 28, odoY + 3, odoLargeur - 30, 16, TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(2);
   tft.setCursor(odoX + 30, odoY + 4);
-  tft.printf("%.0f km", kilometrageTotal); // %.0f supprime la virgule
+  tft.printf("%.0f km", kilometrageTotal);
 
-  // Actualisation Trip partiel (Avec décimale en jaune, taille augmentée à 2)
   tft.fillRect(odoX + 28, odoY + 23, odoLargeur - 30, 16, TFT_BLACK);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
   tft.setTextSize(2);
@@ -524,7 +670,6 @@ void actualiserPage2() {
   tft.setCursor(190, 52);
   tft.printf("%u RPM", rpmBrut);
 
-  // --- Gestion anti-scintillement du Rapport Engagé Géant ---
   if (rapportEngage != dernierRapportAffiche) {
     dernierRapportAffiche = rapportEngage;
 
@@ -596,12 +741,45 @@ void actualiserPage2() {
 void actualiserPage3() {
   tft.setTextColor(TFT_WHITE, TFT_NAVY);
   tft.setTextSize(2);
-  tft.setCursor(20, 110);
-  tft.printf("WiFi AP: %s           ", wifiApActif ? "ON (192.168.4.1)" : "OFF");
-  tft.setCursor(20, 150);
-  tft.printf("Odo: %.1f km        ", kilometrageTotal);
-  tft.setCursor(20, 190);
-  tft.printf("Trip: %.1f km       ", tripPartiel);
+  
+  tft.setCursor(125, 65);
+  tft.printf("%s      ", wifiApActif ? "ON (192.168.4.1)" : "OFF");
+  
+  tft.setCursor(70, 110);
+  tft.printf("%.1f km        ", kilometrageTotal);
+  
+  tft.setCursor(80, 155);
+  tft.printf("%.1f km        ", tripPartiel);
+  
+  // Rafraîchissement État Carte SD
+  tft.setCursor(140, 205);
+  if (carteSdOk) {
+    tft.setTextColor(TFT_GREEN, TFT_NAVY);
+    tft.print("Prete   ");
+  } else {
+    tft.setTextColor(TFT_RED, TFT_NAVY);
+    tft.print("Absente ");
+  }
+
+  // Rafraîchissement État MPU6050
+  tft.setCursor(140, 245);
+  if (mpuOk) {
+    tft.setTextColor(TFT_GREEN, TFT_NAVY);
+    tft.print("OK (Operationnel) ");
+  } else {
+    tft.setTextColor(TFT_RED, TFT_NAVY);
+    tft.print("Erreur / Absent   ");
+  }
+
+  // Rafraîchissement État GPS
+  tft.setCursor(90, 285);
+  if (gpsOk) {
+    tft.setTextColor(TFT_GREEN, TFT_NAVY);
+    tft.print("Actif / Fix     ");
+  } else {
+    tft.setTextColor(TFT_YELLOW, TFT_NAVY);
+    tft.print("Recherche signal ");
+  }
 }
 
 // ==========================================
@@ -680,6 +858,13 @@ void setup() {
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
 
+  // Initialisation de la carte SD et affichage du logo de démarrage
+  initialiserCarteSD();
+  if (carteSdOk) {
+    afficherBmpSD("/logo.bmp", 0, 0);
+    delay(2000); 
+  }
+
   attachInterrupt(digitalPinToInterrupt(PIN_RPM), ISR_CompteTours, FALLING);
 
   gpsSerial.begin(9600, SERIAL_8N1, PIN_GPS_RX, PIN_GPS_TX);
@@ -687,6 +872,9 @@ void setup() {
   Wire.begin(PIN_SDA, PIN_SCL);
   if (mpu.begin()) {
     mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
+    mpuOk = true;
+  } else {
+    mpuOk = false;
   }
 
   chargerDonneesFlash();
@@ -706,7 +894,15 @@ void loop() {
   }
 
   while (gpsSerial.available() > 0) {
-    gps.encode(gpsSerial.read());
+    char c = gpsSerial.read();
+    gps.encode(c);
+    dernierOctetGpsRecu = millis();
+  }
+
+  if (millis() - dernierOctetGpsRecu < 3000) {
+    gpsOk = true;
+  } else {
+    gpsOk = false;
   }
 
   if (gps.speed.isUpdated()) {
@@ -714,6 +910,7 @@ void loop() {
   }
 
   mettreAJourOdometre();
+  enregistrerLogSD();
 
   etatAlerteHuile    = (digitalRead(PIN_OIL) == LOW);
   clignotantGauche   = (digitalRead(PIN_IND_L) == LOW);
@@ -734,12 +931,11 @@ void loop() {
   }
 
   sensors_event_t a, g, tempMpu;
-  if (mpu.getEvent(&a, &g, &tempMpu)) {
+  if (mpuOk && mpu.getEvent(&a, &g, &tempMpu)) {
     gLat = (a.acceleration.x - offsetX) / 9.80665f;
     gLong = (a.acceleration.y - offsetY) / 9.80665f;
   }
 
-  // Gestion du bouton Page (Appui court = changement de page, Appui long > 2s = Reset Trip)
   static unsigned long tempsAppuiBtn = 0;
   static bool boutonEnCours = false;
   bool etatBtn = digitalRead(PIN_PAGE_BTN);
@@ -753,14 +949,12 @@ void loop() {
     boutonEnCours = false;
 
     if (dureeAppui >= 2000) {
-      // Appui long (> 2 secondes) : Reset du Trip partiel
       tripPartiel = 0.0;
       sauvegarderOdometre();
       if (pageActuelle == 3) {
         dessinerFondPage3();
       }
     } else if (dureeAppui > 40) {
-      // Appui court : Changement de page
       pageActuelle++;
       if (pageActuelle > 3) pageActuelle = 1;
     }
