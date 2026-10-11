@@ -37,21 +37,21 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 ![Schéma de câblage final](image/Screenshot_2026-10-11_093627.png)
 
 ---
+## 🔌 Tableaux des Assignations de Broches (Pinout)
 
-### 🔌 Connecteur GX16 (10 Broches - Écran & LEDs)
+### 🔌 Connecteur GX16 (10 Broches - Écran, LEDs & SD)
 | Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus |
 | :---: | :--- | :--- |
-| **Pin 1** | VCC / Alimentation Écran | **5V** ou **3.3V** (selon module) |
+| **Pin 1** | VCC / Alimentation Écran | **5V** ou **3.3V** |
 | **Pin 2** | GND Masse Écran & LEDs | **GND** |
-| **Pin 3** | SPI MOSI (Données) | **GPIO 23** (`D23`) |
-| **Pin 4** | SPI MISO (Carte SD) | **GPIO 19** (`D19`) |
-| **Pin 5** | SPI SCK (Horloge) | **GPIO 18** (`D18`) |
-| **Pin 6** | TFT / SD Chip Select (`SD_CS`) | **GPIO 33** (`D33`) |
-| **Pin 7** | Rétroéclairage (`PIN_BACKLIGHT`) | **GPIO 27** (`D27`) |
-| **Pin 8** | Données Bandeau LEDs (`PIN_LED_DATA`) | **GPIO 13** |
-| **Pin 9** | *Réservé / Extension* | - |
-| **Pin 10** | *Réservé / Extension* | - |
-
+| **Pin 3** | SPI MOSI (`TFT_MOSI`) | **GPIO 23** (`23`) |
+| **Pin 4** | SPI SCK (`TFT_SCLK`) | **GPIO 18** (`18`) |
+| **Pin 5** | TFT Chip Select (`TFT_CS`) | **GPIO 15** (`15`) |
+| **Pin 6** | TFT Data/Command (`TFT_DC`) | **GPIO 4** (`4`) |
+| **Pin 7** | TFT Reset (`TFT_RST`) | **GPIO 5** (`5`) |
+| **Pin 8** | Rétroéclairage (`TFT_BL` / `PIN_BACKLIGHT`) | **GPIO 27** (`27`) |
+| **Pin 9** | Données Bandeau LEDs (`PIN_LED_DATA`) | **GPIO 13** (`13`) |
+| **Pin 10** | SD Chip Select (`SD_CS`) | **GPIO 33** (`33`) |
 ### 🖥️ Affichage TFT & Carte SD (Bus SPI Partagé)
 | Broche Périphérique | Rôle / Description | Broche ESP32 |
 | :--- | :--- | :--- |
