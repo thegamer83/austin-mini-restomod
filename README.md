@@ -8,7 +8,7 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 | Vue d'ensemble du Dashboard | Interface Web & Paramétrage |
 | :---: | :---: |
-| ![Dashboard en action](/image/20261010_134729.jpg) | ![Interface Web](/image/Screenshot_20261010_135628_Chrome.jpg) |
+| ![Dashboard en action](image/20261118_181519.jpg) | ![Interface Web](/image/Screenshot_20261010_135628_Chrome.jpg) |
 | *Affichage TFT vintage / course* | *Configuration web (Seuils RPM & Rôles LEDs)* |
 
 ---
