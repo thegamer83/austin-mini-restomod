@@ -15,16 +15,26 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 
 ## ✨ Fonctionnalités Principales
 
-### Affichage TFT (3 pages, bouton Page)
+### Affichage TFT (4 pages, bouton Page)
 1. **Page 1 – Cadrans Smiths vintage (fond crème) :** grand compte-tours central (0–8000 tr/min, zone rouge dès 7000) intégrant la **vitesse GPS numérique**, le **kilométrage total**, le **trip partiel**, la **tension de batterie** et les voyants (clignotants, feux de croisement, pleins phares). Quatre cadrans auxiliaires : jauge d'essence, rapport engagé, température d'eau et **horloge numérique** (heure GPS, passage automatique heure d'été / hiver).
 2. **Page 2 – Tableau de bord course :** barre de régime symétrique en dégradé avec valeur centrale, **rapport engagé géant** qui clignote en rouge quand il faut changer de vitesse, vitesse GPS, radar **G-Force** (latéral / accélération), distance (trip et total) et panneau moteur (eau, huile, essence, tension de batterie).
 3. **Page 3 – Réglages & système :** statut du point d'accès Wi-Fi (et adresse IP), kilométrage total, trip partiel, état du **MPU6050**, du **GPS** et du **mode démo**.
+
+4. **Page 4 – Performance :** chrono **0-100 km/h** (prêt / en cours / terminé, GPS à 1 Hz donc précision d'environ ±0,3 s), meilleur temps, records de vitesse max et de G (latéral, accélération, freinage) et état de l'entretien. Les records sont enregistrés en flash à l'arrêt.
+
+**Voyant « moteur arrêté » :** un voyant rouge `MOTEUR OFF` s'affiche sur les pages 1 et 2 quand aucune impulsion RPM n'est reçue depuis 2 secondes.
 
 ### Animation de démarrage
 Silhouette de la Mini en blanc sur fond noir qui arrive à l'écran, route qui défile, phare qui s'allume, titre « AUSTIN MINI » lettre par lettre, accompagnée d'une comète puis d'un remplissage sur le bandeau de LEDs. Un appui sur le bouton Page la passe.
 
 ### Rapport engagé calculé
 Le rapport est déduit du régime et de la vitesse GPS à partir des rapports de boîte (1ère à 4ème), du rapport de pont et de la circonférence de roue, tous réglables sur l'interface Web. Un ratio mesuré en direct aide au réglage. Sous 3 km/h, le point mort (N) est affiché.
+
+### Rappel d'entretien (vidange)
+Intervalle réglable (6000 km par défaut). Au démarrage, un écran d'alerte s'affiche à 300 km de l'échéance ou au-delà (le bouton le ferme). Le bouton « Entretien effectué » de l'interface Web remet le compteur à zéro. Le premier démarrage compte à partir du kilométrage de ce moment.
+
+### Mise à jour sans fil
+Depuis l'interface Web, envoi du fichier `firmware.bin` (PlatformIO : `.pio/build/.../firmware.bin`). Refusé si la voiture roule. Ne pas couper le contact pendant l'envoi.
 
 ### Alerte surchauffe moteur
 Au-dessus du seuil réglable (100 °C par défaut), l'écran passe en rouge clignotant plein écran avec la température. Un appui sur le bouton Page l'acquitte ; elle se réarme 3 °C plus bas.
@@ -45,7 +55,7 @@ Disposition par défaut : **4 LEDs de voyants à gauche (LED 0-3), 16 LEDs de sh
 - **Couleur RGB** et option **« Clignote »** pour chaque LED, avec **repérage** : la LED choisie clignote seule pendant 6 secondes quand on la sélectionne.
 
 ### Serveur Web embarqué (mode AP)
-Réglage du kilométrage, de l'intensité des LEDs, du mode démo, des seuils RPM, de la boîte de vitesses, de la luminosité auto, de l'alerte surchauffe et du facteur de la tension de batterie ; configuration des 24 LEDs ; **calibration du gyroscope** (bouton) ; journal de trajets (tableau des 8 derniers, téléchargement CSV, effacement).
+Réglage du kilométrage, de l'intervalle d'entretien, des records (remise à zéro), de la mise à jour du programme, de l'intensité des LEDs, du mode démo, des seuils RPM, de la boîte de vitesses, de la luminosité auto, de l'alerte surchauffe et du facteur de la tension de batterie ; configuration des 24 LEDs ; **calibration du gyroscope** (bouton) ; journal de trajets (tableau des 8 derniers, téléchargement CSV, effacement).
 
 ### Persistance en mémoire Flash
 Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes sur le bouton Page), offsets du gyroscope et configuration complète via la bibliothèque `Preferences`.
