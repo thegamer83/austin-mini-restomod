@@ -37,7 +37,7 @@ Intervalle réglable (10000 km par défaut). À 300 km de l'échéance ou au-del
 Depuis l'interface Web, envoi du fichier `firmware.bin` (PlatformIO : `.pio/build/.../firmware.bin`). Refusé si la voiture roule. Ne pas couper le contact pendant l'envoi.
 
 ### Alerte surchauffe moteur
-Au-dessus du seuil réglable (100 °C par défaut), l'écran passe en rouge clignotant plein écran avec la température. Un appui sur le bouton Page l'acquitte ; elle se réarme 3 °C plus bas.
+Au-dessus du seuil réglable (100 °C par défaut), le message rouge `SURCHAUFFE MOTEUR` s'affiche au centre de l'écran, par-dessus la page en cours qui reste visible. Un appui sur le bouton Page le masque ; il se réarme 3 °C plus bas.
 
 ### Luminosité automatique
 Quand les feux (croisement ou route) sont allumés, le rétroéclairage et les LEDs baissent progressivement. Valeurs jour / nuit réglables, fonction désactivable.
@@ -58,7 +58,7 @@ Disposition par défaut : **4 LEDs de voyants à gauche (LED 0-3), 16 LEDs de sh
 Réglage du kilométrage, de l'intervalle d'entretien, des records (remise à zéro), de la mise à jour du programme, de l'intensité des LEDs, du mode démo, des seuils RPM, de la boîte de vitesses, de la luminosité auto, de l'alerte surchauffe et du facteur de la tension de batterie ; configuration des 24 LEDs ; **calibration du gyroscope** (bouton) ; journal de trajets (tableau des 8 derniers, téléchargement CSV, effacement).
 
 ### Persistance en mémoire Flash
-Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes sur le bouton Page), offsets du gyroscope et configuration complète via la bibliothèque `Preferences`.
+Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes sur le bouton Page, qui remet aussi à zéro les records de performance), offsets du gyroscope et configuration complète via la bibliothèque `Preferences`.
 
 ---
 
@@ -76,18 +76,26 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 > - La **tension de batterie** utilise le GPIO 39 (entrée analogique seule) avec un pont diviseur.
 
 ### 🔌 Connecteur GX16 (10 broches - Écran & LEDs)
-| Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus |
-| :---: | :--- | :--- |
-| **Pin 1** | VCC / Alimentation Écran | **5V** ou **3.3V** |
-| **Pin 2** | GND Masse Écran & LEDs | **GND** |
-| **Pin 3** | SPI MOSI (`TFT_MOSI`) | **GPIO 23** |
-| **Pin 4** | SPI SCK (`TFT_SCLK`) | **GPIO 18** |
-| **Pin 5** | TFT Chip Select (`TFT_CS`) | **GPIO 15** |
-| **Pin 6** | TFT Data/Command (`TFT_DC`) | **GPIO 4** |
-| **Pin 7** | TFT Reset (`TFT_RST`) | **GPIO 5** |
-| **Pin 8** | Rétroéclairage (`TFT_BL` / `PIN_BACKLIGHT`) | **GPIO 27** |
-| **Pin 9** | Données Bandeau LEDs (`PIN_LED_DATA`) | **GPIO 13** |
-| **Pin 10** | Libre (ancien SD Chip Select) | – |
+Un seul câble 10 fils relie le boîtier ESP32 (embase GX16 femelle) au boîtier écran (câble sortant par l'encoche du bas, fiche GX16 mâle côté ESP32).
+
+| Broche GX16 (10 pins) | Destination / Rôle | Broche ESP32 / Bus | Couleur suggérée |
+| :---: | :--- | :--- | :--- |
+| **Pin 1** | **+5 V** commun : VCC de l'écran **et** alimentation de la bande LED | **5 V du convertisseur** | Rouge (gros fil) |
+| **Pin 2** | GND (écran et LEDs) | **GND** | Noir (gros fil) |
+| **Pin 3** | SPI MOSI (`TFT_MOSI`) | **GPIO 23** | Jaune |
+| **Pin 4** | SPI SCK (`TFT_SCLK`) | **GPIO 18** | Vert |
+| **Pin 5** | TFT Chip Select (`TFT_CS`) | **GPIO 15** | Bleu |
+| **Pin 6** | TFT Data/Command (`TFT_DC`) | **GPIO 4** | Violet |
+| **Pin 7** | TFT Reset (`TFT_RST`) | **GPIO 5** | Gris |
+| **Pin 8** | Rétroéclairage (`TFT_BL` / `PIN_BACKLIGHT`) | **GPIO 27** | Blanc |
+| **Pin 9** | Données Bandeau LEDs (`PIN_LED_DATA`) | **GPIO 13** (via 330 Ω en série côté ESP32) | Orange |
+| **Pin 10** | 2e GND (retour du courant des LEDs) | **GND** | Noir |
+
+> ⚠️ **Notes sur ce câble :**
+> - L'écran est alimenté en **5 V** (régulateur embarqué du module) : vérifier que le module LAFVIN accepte bien le 5 V sur sa broche VCC avant le premier branchement. Les signaux restent en 3,3 V.
+> - Le 5 V vient **directement du convertisseur**, jamais du VIN de l'ESP32. Condensateur de 470 à 1000 µF entre 5 V et GND côté bandeau LED, au plus près de son entrée.
+> - Utiliser des fils plus gros (≥ 0,5 mm²) pour les broches 1, 2 et 10.
+> - Tester la continuité de chaque broche entre les deux fiches avant de brancher l'écran.
 
 ### 🖥️ Affichage TFT (Bus SPI matériel)
 | Broche Périphérique | Rôle / Description | Broche ESP32 |
