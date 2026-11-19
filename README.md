@@ -18,9 +18,9 @@ Tableau de bord numérique moderne de type "Fast Road / GT" développé pour une
 ### Affichage TFT (4 pages, bouton Page)
 1. **Page 1 – Cadrans Smiths vintage (fond crème) :** grand compte-tours central (0–8000 tr/min, zone rouge dès 7000) intégrant la **vitesse GPS numérique**, le **kilométrage total**, le **trip partiel**, la **tension de batterie** et les voyants (clignotants, feux de croisement, pleins phares). Quatre cadrans auxiliaires : jauge d'essence, rapport engagé, température d'eau et **horloge numérique** (heure GPS, passage automatique heure d'été / hiver).
 2. **Page 2 – Tableau de bord course :** barre de régime symétrique en dégradé avec valeur centrale, **rapport engagé géant** qui clignote en rouge quand il faut changer de vitesse, vitesse GPS, radar **G-Force** (latéral / accélération), distance (trip et total) et panneau moteur (eau, huile, essence, tension de batterie).
-3. **Page 3 – Réglages & système :** statut du point d'accès Wi-Fi (et adresse IP), kilométrage total, trip partiel, état du **MPU6050**, du **GPS** et du **mode démo**.
+3. **Page 3 – Performance :** chrono **0-100 km/h** (prêt / en cours / terminé, GPS à 1 Hz donc précision d'environ ±0,3 s), meilleur temps, records de vitesse max et de G (latéral, accélération, freinage) et état de l'entretien. Les records sont enregistrés en flash à l'arrêt.
 
-4. **Page 4 – Performance :** chrono **0-100 km/h** (prêt / en cours / terminé, GPS à 1 Hz donc précision d'environ ±0,3 s), meilleur temps, records de vitesse max et de G (latéral, accélération, freinage) et état de l'entretien. Les records sont enregistrés en flash à l'arrêt.
+4. **Page 4 – Réglages & système :** statut du point d'accès Wi-Fi (et adresse IP), kilométrage total, trip partiel, état du **MPU6050**, du **GPS** et du **mode démo**.
 
 **Voyant « moteur arrêté » :** un voyant rouge `MOTEUR OFF` s'affiche sur les pages 1 et 2 quand aucune impulsion RPM n'est reçue depuis 2 secondes.
 
@@ -31,7 +31,7 @@ Silhouette de la Mini en blanc sur fond noir qui arrive à l'écran, route qui d
 Le rapport est déduit du régime et de la vitesse GPS à partir des rapports de boîte (1ère à 4ème), du rapport de pont et de la circonférence de roue, tous réglables sur l'interface Web. Un ratio mesuré en direct aide au réglage. Sous 3 km/h, le point mort (N) est affiché.
 
 ### Rappel d'entretien (vidange)
-Intervalle réglable (6000 km par défaut). Au démarrage, un écran d'alerte s'affiche à 300 km de l'échéance ou au-delà (le bouton le ferme). Le bouton « Entretien effectué » de l'interface Web remet le compteur à zéro. Le premier démarrage compte à partir du kilométrage de ce moment.
+Intervalle réglable (10000 km par défaut). À 300 km de l'échéance ou au-delà, un voyant `SERVICE` (orange, puis rouge une fois l'échéance dépassée) s'affiche en permanence sur les pages 1 et 2, et un écran d'alerte apparaît au démarrage (le bouton le ferme). Le bouton « Entretien effectué » de l'interface Web remet le compteur à zéro. Le premier démarrage compte à partir du kilométrage de ce moment.
 
 ### Mise à jour sans fil
 Depuis l'interface Web, envoi du fichier `firmware.bin` (PlatformIO : `.pio/build/.../firmware.bin`). Refusé si la voiture roule. Ne pas couper le contact pendant l'envoi.
@@ -71,8 +71,8 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 ## 🔌 Tableaux des Assignations de Broches (Pinout)
 
 > ⚠️ **Notes importantes sur le câblage :**
-> - Le **voyant alternateur** est sur le **GPIO 19**, qui est aussi la broche MISO du bus SPI. Dans `User_Setup.h`, il faut mettre `#define TFT_MISO -1` (l'écran n'est jamais lu).
-> - La **carte SD a été retirée** : le GPIO 2 est libre.
+> - Le **voyant alternateur** est sur le **GPIO 2** (le GPIO 19, ancien MISO partagé, n'est plus utilisé par le code : aucun conflit avec `TFT_MISO 19`).
+> - La **carte SD a été retirée**.
 > - La **tension de batterie** utilise le GPIO 39 (entrée analogique seule) avec un pont diviseur.
 
 ### 🔌 Connecteur GX16 (10 broches - Écran & LEDs)
@@ -110,7 +110,7 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 | **Clignotant droit** | Entrée clignotant droit (`PIN_IND_R`) | **GPIO 33** |
 | **Feux de croisement** | Entrée phares (`PIN_LIGHTS`) – résistance 10 kΩ vers 3,3 V (entrée seule) | **GPIO 35** |
 | **Pleins phares** | Feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
-| **Voyant alternateur** | Défaut de charge (`PIN_ALT`), optocoupleur vers GND, pull-up interne | **GPIO 19** |
+| **Voyant alternateur** | Défaut de charge (`PIN_ALT`), optocoupleur vers GND, pull-up interne | **GPIO 2** |
 
 ### 📊 Entrées Analogiques (ADC)
 | Capteur | Rôle / Description | Broche ESP32 |
@@ -133,7 +133,7 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 ```cpp
 #define ST7796_DRIVER
 #define TFT_MOSI 23
-#define TFT_MISO -1      // GPIO 19 réservé au voyant alternateur
+#define TFT_MISO 19      // non câblé, l'écran est utilisé en écriture seule
 #define TFT_SCLK 18
 #define TFT_CS   15
 #define TFT_DC   4
