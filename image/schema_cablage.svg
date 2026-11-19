@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1210" viewBox="0 0 1800 1210" font-family="DejaVu Sans, Arial, sans-serif">
+<rect width="1800" height="1210" fill="#fff"/>
+<text x="900.0" y="50" font-size="28" text-anchor="middle" font-weight="bold" fill="#111">Dashboard Austin Mini - Schema de cablage (ESP32 30 broches)</text>
+<text x="900.0" y="78" font-size="14" text-anchor="middle" font-weight="normal" fill="#6e7781">Version avec page Performance : alternateur sur GPIO 2, carte SD retiree</text>
+<rect x="700" y="120" width="360" height="806" rx="12" fill="#e8f0fe" stroke="#1f3a8a" stroke-width="3"/>
+<text x="880.0" y="160" font-size="22" text-anchor="middle" font-weight="bold" fill="#111">ESP32 DevKit</text>
+<text x="880.0" y="182" font-size="13" text-anchor="middle" font-weight="normal" fill="#6e7781">30 broches</text>
+<line x1="700" y1="200" x2="400" y2="200" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="205" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 23</text>
+<line x1="700" y1="252" x2="400" y2="252" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="257" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 18</text>
+<line x1="700" y1="304" x2="400" y2="304" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="309" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 15</text>
+<line x1="700" y1="356" x2="400" y2="356" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="361" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 4</text>
+<line x1="700" y1="408" x2="400" y2="408" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="413" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 5</text>
+<line x1="700" y1="460" x2="400" y2="460" stroke="#1f6feb" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="465" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 27</text>
+<line x1="700" y1="512" x2="400" y2="512" stroke="#1a9b3c" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="517" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 13</text>
+<line x1="700" y1="564" x2="400" y2="564" stroke="#1a9b3c" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="569" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 21</text>
+<line x1="700" y1="616" x2="400" y2="616" stroke="#1a9b3c" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="621" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 22</text>
+<line x1="700" y1="668" x2="400" y2="668" stroke="#1a9b3c" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="673" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GPIO 16</text>
+<line x1="700" y1="720" x2="400" y2="720" stroke="#d1242f" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="725" font-size="14" text-anchor="start" font-weight="normal" fill="#111">3V3</text>
+<line x1="700" y1="772" x2="400" y2="772" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+<text x="712" y="777" font-size="14" text-anchor="start" font-weight="normal" fill="#111">GND</text>
+<rect x="60" y="178" width="340" height="304" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="72" y="321.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">Ecran TFT</text>
+<text x="72" y="339.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">ST7796S 480x320</text>
+<text x="388" y="205" font-size="13" text-anchor="end" font-weight="normal" fill="#111">SDI (MOSI)</text>
+<text x="388" y="257" font-size="13" text-anchor="end" font-weight="normal" fill="#111">SCK</text>
+<text x="388" y="309" font-size="13" text-anchor="end" font-weight="normal" fill="#111">CS</text>
+<text x="388" y="361" font-size="13" text-anchor="end" font-weight="normal" fill="#111">DC</text>
+<text x="388" y="413" font-size="13" text-anchor="end" font-weight="normal" fill="#111">RESET</text>
+<text x="388" y="465" font-size="13" text-anchor="end" font-weight="normal" fill="#111">LED (BL)</text>
+<rect x="60" y="490" width="340" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="72" y="503.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">Bandeau WS2812B</text>
+<text x="72" y="521.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">24 LED</text>
+<text x="388" y="517" font-size="13" text-anchor="end" font-weight="normal" fill="#111">DIN</text>
+<rect x="60" y="542" width="340" height="96" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="72" y="590.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">MPU-6050</text>
+<text x="388" y="569" font-size="13" text-anchor="end" font-weight="normal" fill="#111">SDA</text>
+<text x="388" y="621" font-size="13" text-anchor="end" font-weight="normal" fill="#111">SCL</text>
+<rect x="60" y="646" width="340" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="72" y="659.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">Module GPS</text>
+<text x="72" y="677.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">(UART)</text>
+<text x="388" y="673" font-size="13" text-anchor="end" font-weight="normal" fill="#111">TX</text>
+<rect x="60" y="698" width="340" height="96" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="72" y="746.0" font-size="15" text-anchor="start" font-weight="bold" fill="#111">Alim. capteurs</text>
+<text x="388" y="725" font-size="13" text-anchor="end" font-weight="normal" fill="#111">VCC</text>
+<text x="388" y="777" font-size="13" text-anchor="end" font-weight="normal" fill="#111">GND</text>
+<text x="236" y="162" font-size="12" text-anchor="middle" font-weight="normal" fill="#6e7781">MISO (GPIO 19) non cable</text>
+<text x="1048" y="205" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 12</text>
+<line x1="1060" y1="200" x2="1360" y2="200" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="178" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="196" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Bouton PAGE</text>
+<text x="1372" y="213" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">vers GND (pull-up interne) - pas de resistance externe</text>
+<text x="1048" y="257" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 25</text>
+<line x1="1060" y1="252" x2="1360" y2="252" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="230" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="248" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Bouton WIFI</text>
+<text x="1372" y="265" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">vers GND (pull-up interne)</text>
+<text x="1048" y="309" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 14</text>
+<line x1="1060" y1="304" x2="1130" y2="304" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="287" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="302" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="315" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="304" x2="1360" y2="304" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="282" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="300" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Signal regime (compte-tours)</text>
+<text x="1372" y="317" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">bobine / sortie allumage</text>
+<text x="1048" y="361" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 26</text>
+<line x1="1060" y1="356" x2="1130" y2="356" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="339" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="354" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="367" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="356" x2="1360" y2="356" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="334" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="352" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Pression d'huile</text>
+<text x="1372" y="369" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">contacteur vers masse</text>
+<text x="1048" y="413" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 17</text>
+<line x1="1060" y1="408" x2="1130" y2="408" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="391" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="406" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="419" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="408" x2="1360" y2="408" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="386" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="404" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Clignotant gauche</text>
+<text x="1372" y="421" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">+12 V apres le flasher</text>
+<text x="1048" y="465" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 33</text>
+<line x1="1060" y1="460" x2="1130" y2="460" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="443" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="458" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="471" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="460" x2="1360" y2="460" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="438" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="456" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Clignotant droit</text>
+<text x="1372" y="473" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">+12 V apres le flasher</text>
+<text x="1048" y="517" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 35</text>
+<line x1="1060" y1="512" x2="1130" y2="512" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="495" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="510" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="523" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="512" x2="1360" y2="512" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="490" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="508" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Feux de croisement</text>
+<text x="1372" y="525" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">+12 V - pull-up externe 10 k vers 3,3 V (GPIO 35 sans pull-up)</text>
+<text x="1048" y="569" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 32</text>
+<line x1="1060" y1="564" x2="1130" y2="564" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="547" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="562" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="575" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="564" x2="1360" y2="564" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="542" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="560" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Feux de route</text>
+<text x="1372" y="577" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">+12 V</text>
+<text x="1048" y="621" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 2</text>
+<line x1="1060" y1="616" x2="1130" y2="616" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1130" y="599" width="120" height="34" rx="6" fill="#fff8e6" stroke="#b45309" stroke-width="1.8"/>
+<text x="1190" y="614" font-size="12" text-anchor="middle" font-weight="bold" fill="#111">PC817</text>
+<text x="1190" y="627" font-size="11" text-anchor="middle" font-weight="normal" fill="#6e7781">+ R 2,2 k</text>
+<line x1="1250" y1="616" x2="1360" y2="616" stroke="#e07b00" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="594" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="612" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Voyant alternateur</text>
+<text x="1372" y="629" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">borne D+ (voyant de charge)</text>
+<text x="1048" y="673" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 34</text>
+<line x1="1060" y1="668" x2="1360" y2="668" stroke="#8250df" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="646" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="664" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Sonde temperature eau</text>
+<text x="1372" y="681" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">resistance fixe vers 3,3 V + sonde vers GND</text>
+<text x="1048" y="725" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 36</text>
+<line x1="1060" y1="720" x2="1360" y2="720" stroke="#8250df" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="698" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="716" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Jauge essence</text>
+<text x="1372" y="733" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">resistance fixe vers 3,3 V + jauge vers GND</text>
+<text x="1048" y="777" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GPIO 39</text>
+<line x1="1060" y1="772" x2="1360" y2="772" stroke="#8250df" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="750" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="768" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Tension batterie</text>
+<text x="1372" y="785" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">+12 V - 100 k - point - 22 k - GND, 100 nF sur le 22 k</text>
+<text x="1048" y="829" font-size="14" text-anchor="end" font-weight="normal" fill="#111">VIN</text>
+<line x1="1060" y1="824" x2="1360" y2="824" stroke="#d1242f" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="802" width="420" height="44" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="820" font-size="13" text-anchor="start" font-weight="bold" fill="#111">Alimentation 5 V</text>
+<text x="1372" y="837" font-size="11" text-anchor="start" font-weight="normal" fill="#6e7781">convertisseur 12 V vers 5 V (fusible 2 A sur le +12 V)</text>
+<text x="1048" y="881" font-size="14" text-anchor="end" font-weight="normal" fill="#111">GND</text>
+<line x1="1060" y1="876" x2="1360" y2="876" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="1360" y="856" width="420" height="40" rx="8" fill="#f6f8fa" stroke="#333" stroke-width="1.8"/>
+<text x="1372" y="881" font-size="13" text-anchor="start" font-weight="normal" fill="#111">Masse commune (batterie - , alim, capteurs)</text>
+<rect x="60" y="966" width="1720" height="224" rx="8" fill="#fffdf5" stroke="#caa" stroke-width="1.5"/>
+<text x="80" y="994" font-size="13" text-anchor="start" font-weight="normal" fill="#111">Legende : bleu = SPI ecran | vert = bus et donnees | orange = entrees numeriques (via optocoupleur ou bouton) | violet = entrees analogiques | rouge = alimentation | noir = masse</text>
+<text x="80" y="1022" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- Bandeau LED : +5 V et GND directs, condensateur 1000 uF sur l'alimentation, resistance 330 ohm en serie sur DIN. GPS : VCC en 3,3 V ou 5 V selon le module. MPU-6050 et GPS sur 3V3, masses communes.</text>
+<text x="80" y="1046" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- Optocoupleurs : cote LED = signal 12 V + resistance 2,2 k a 4,7 k vers la masse voiture ; cote transistor = collecteur sur le GPIO, emetteur sur GND (le code active le pull-up interne, l'entree passe a 0 quand le signal est present).</text>
+<text x="80" y="1070" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- GPIO 34, 35, 36 et 39 sont des entrees seules : pas de pull-up interne. Seul le GPIO 35 (feux de croisement) exige donc une resistance de 10 k vers 3,3 V.</text>
+<text x="80" y="1094" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- Ne pas mettre de resistance externe sur GPIO 12 (broche de demarrage de l'ESP32) ni sur GPIO 2 : le pull-up interne suffit.</text>
+<text x="80" y="1118" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- Bandeau WS2812B : alimenter directement en 5 V (jusqu'a 1,5 A pour 24 LED), masse commune avec l'ESP32 ; un adaptateur de niveau 74AHCT125 sur DIN est recommande.</text>
+<text x="80" y="1142" font-size="12" text-anchor="start" font-weight="normal" fill="#111">- Les valeurs de resistances des sondes (temperature, essence) sont a adapter a vos capteurs d'origine ; verifier la tension sur le GPIO : jamais plus de 3,3 V.</text>
+</svg>
