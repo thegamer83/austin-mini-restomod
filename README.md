@@ -64,7 +64,7 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 
 ## 📌 Schéma de Câblage Global
 
-![Schéma de câblage final](image/Screenshot_2026-10-11_093627.png)
+![Schéma de câblage final](image/schema_cablage.png)
 
 ---
 
