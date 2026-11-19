@@ -51,7 +51,7 @@ Simulation autonome d'un cycle de conduite de 36 secondes en boucle (accélérat
 ### Bandeau LED WS2812B (24 LEDs configurables)
 Disposition par défaut : **4 LEDs de voyants à gauche (LED 0-3), 16 LEDs de shift-light au centre (LED 4-19), 4 LEDs de voyants à droite (LED 20-23)**.
 - **Shift-light :** seuils personnalisables Vert / Rouge / Bleu ; au RPM max, toutes les LEDs du shift-light clignotent.
-- **Rôles affectables LED par LED :** Shift Vert / Rouge / Bleu, clignotant gauche, clignotant droit, voyant température d'eau, voyant huile, voyant Wi-Fi, feux de croisement, feux de route, voyant essence (< 15 %), voyant alternateur.
+- **Rôles affectables LED par LED :** Shift Vert / Rouge / Bleu, clignotant gauche, clignotant droit, voyant température d'eau, voyant huile, voyant Wi-Fi, feux de croisement, feux de route, voyant essence (< 15 %).
 - **Couleur RGB** et option **« Clignote »** pour chaque LED, avec **repérage** : la LED choisie clignote seule pendant 6 secondes quand on la sélectionne.
 
 ### Serveur Web embarqué (mode AP)
@@ -71,7 +71,7 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 ## 🔌 Tableaux des Assignations de Broches (Pinout)
 
 > ⚠️ **Notes importantes sur le câblage :**
-> - Le **voyant alternateur** est sur le **GPIO 2** (le GPIO 19, ancien MISO partagé, n'est plus utilisé par le code : aucun conflit avec `TFT_MISO 19`).
+> - Le GPIO 19 (ancien MISO partagé) n'est plus utilisé par le code : aucun conflit avec `TFT_MISO 19`. Le GPIO 2 est libre.
 > - La **carte SD a été retirée**.
 > - La **tension de batterie** utilise le GPIO 39 (entrée analogique seule) avec un pont diviseur.
 
@@ -110,7 +110,6 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 | **Clignotant droit** | Entrée clignotant droit (`PIN_IND_R`) | **GPIO 33** |
 | **Feux de croisement** | Entrée phares (`PIN_LIGHTS`) – résistance 10 kΩ vers 3,3 V (entrée seule) | **GPIO 35** |
 | **Pleins phares** | Feux de route (`PIN_HIGH_BEAM`) | **GPIO 32** |
-| **Voyant alternateur** | Défaut de charge (`PIN_ALT`), optocoupleur vers GND, pull-up interne | **GPIO 2** |
 
 ### 📊 Entrées Analogiques (ADC)
 | Capteur | Rôle / Description | Broche ESP32 |
@@ -163,5 +162,5 @@ Le code utilise la bibliothèque `LittleFS` pour le journal de trajets.
 - Centrale inertielle MPU-6050
 - Module GPS UART
 - Bandeau LED WS2812B (24 LEDs)
-- Optocoupleurs pour les signaux de la voiture (RPM, feux, clignotants, huile, alternateur)
+- Optocoupleurs pour les signaux de la voiture (RPM, feux, clignotants, huile)
 - Ponts diviseurs pour la jauge d'essence, la sonde de température d'eau et la tension de batterie
