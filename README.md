@@ -55,7 +55,14 @@ Disposition par défaut : **4 LEDs de voyants à gauche (LED 0-3), 16 LEDs de sh
 - **Couleur RGB** et option **« Clignote »** pour chaque LED, avec **repérage** : la LED choisie clignote seule pendant 6 secondes quand on la sélectionne.
 
 ### Serveur Web embarqué (mode AP)
-Réglage du kilométrage, de l'intervalle d'entretien, des records (remise à zéro), de la mise à jour du programme, de l'intensité des LEDs, du mode démo, des seuils RPM, de la boîte de vitesses, de la luminosité auto, de l'alerte surchauffe et du facteur de la tension de batterie ; configuration des 24 LEDs ; **calibration du gyroscope** (bouton) ; journal de trajets (tableau des 8 derniers, téléchargement CSV, effacement).
+Réglage du kilométrage, de l'intervalle d'entretien, des records (remise à zéro), de la mise à jour du programme, de l'intensité des LEDs, du mode démo, des seuils RPM, de la boîte de vitesses, de la luminosité auto, de l'alerte surchauffe et du facteur de la tension de batterie ; configuration des 24 LEDs ; **calibration du gyroscope** (bouton) ; **page de calibration des capteurs** ; journal de trajets (tableau des 8 derniers, téléchargement CSV, effacement).
+
+### Calibration des capteurs (page `/calib`)
+Page dédiée, accessible depuis le tableau de bord web (bouton « Ouvrir la calibration »), avec les tensions lues en direct (rafraîchies chaque seconde) :
+- **Jauge d'essence** et **sonde de température d'eau** : 3 points chacun (tension ADC en mV → % ou °C). Un bouton **Capturer** relève la tension actuelle ; on saisit ensuite la valeur réelle (réservoir vide / demi / plein, moteur froid / chaud / très chaud). L'interpolation est linéaire entre les points, les points sont triés automatiquement et les valeurs sont bornées aux extrémités.
+- **Tension batterie** : on saisit la tension mesurée au multimètre, le facteur du pont diviseur est recalculé automatiquement.
+- Bouton **Valeurs par défaut** pour tout remettre à zéro.
+- Les réglages sont stockés en mémoire Flash (espace de noms `calib`).
 
 ### Persistance en mémoire Flash
 Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes sur le bouton Page, qui remet aussi à zéro les records de performance), offsets du gyroscope et configuration complète via la bibliothèque `Preferences`.
