@@ -73,6 +73,9 @@ Kilométrage total, trip partiel (remise à zéro par appui long de 2 secondes s
 
 ![Schéma de câblage final](image/schema_cablage.png)
 
+### 🔧 Schéma des résistances et circuits d'entrée
+![Schéma des résistances](image/schema_resistances.png)
+
 ---
 
 ## 🔌 Tableaux des Assignations de Broches (Pinout)
